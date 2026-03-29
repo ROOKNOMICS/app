@@ -516,15 +516,16 @@
                         
                     <!-- Emulated Chip -->
                     <View
-                        android:layout_width="40dp"
-                        android:layout_height="28dp"
-                        android:background="@color/gold_brand"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/img"
                         android:layout_marginTop="40dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="•••• •••• •••• ••••"
+                        android:layout_marginTop="23dp"
                         android:textColor="@color/text_secondary"
                         android:textSize="18sp"
                         android:layout_alignParentBottom="true"
