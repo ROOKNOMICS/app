@@ -20,9 +20,13 @@
         <!-- Injected Logo -->
         <ImageView
             android:id="@+id/iv_splash_logo"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:src="@drawable/img_logo_splash"
+            android:rotationX="12"
+            android:transformPivotX="23dp"
+            android:transformPivotY="1dp"
+            android:rotationY="12"
             android:layout_marginBottom="48dp"
             android:scaleType="centerCrop"/>
 
@@ -37,7 +41,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test your edge."
+            android:text="Test Your Edge."
             android:textColor="@color/white"
             android:textSize="44sp"
             android:textStyle="bold"
@@ -66,7 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ılı  ROOKNOMICS © 2026"
+            android:text=" ROOKNOMICS © 2026"
             android:textColor="@color/text_secondary"
             android:textSize="10sp"
             android:textStyle="bold"
