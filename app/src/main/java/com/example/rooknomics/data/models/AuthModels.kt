@@ -14,6 +14,7 @@ data class RegisterRequest(
 data class VerifyOtpRequest(
     val email: String,
     val otp: String
+
 )
 
 data class ResendOtpRequest(
