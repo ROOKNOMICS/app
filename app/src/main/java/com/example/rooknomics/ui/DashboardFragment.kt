@@ -22,7 +22,20 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
+        // Start infinite float animation on the core Accumulation image
+        val floatAnim = android.view.animation.AnimationUtils.loadAnimation(requireContext(), com.example.rooknomics.R.anim.anim_float)
+        binding.ivGoldCoins.startAnimation(floatAnim)
+        
         binding.btnToBuilder.setOnClickListener {
+            findNavController().navigate(com.example.rooknomics.R.id.action_dashboardFragment_to_builderFragment)
+        }
+        
+        binding.btnRunSimBottom.setOnClickListener {
+            findNavController().navigate(com.example.rooknomics.R.id.action_dashboardFragment_to_builderFragment)
+        }
+
+        binding.btnViewDemo.setOnClickListener {
+            // Usually acts as shortcut; linking to Builder for now
             findNavController().navigate(com.example.rooknomics.R.id.action_dashboardFragment_to_builderFragment)
         }
         

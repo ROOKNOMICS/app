@@ -31,6 +31,16 @@ class LoginFragment : Fragment() {
         }
 
         binding.btnLogin.setOnClickListener {
+            val email = binding.etEmail.text.toString().trim()
+            val name = binding.etName.text.toString().trim()
+            
+            val sharedPref = requireActivity().getSharedPreferences("USER_SESSION", android.content.Context.MODE_PRIVATE)
+            with (sharedPref.edit()) {
+                putString("EMAIL", if (email.isNotEmpty()) email else "24cseaiml055@jssaten.ac.in")
+                putString("NAME", if (name.isNotEmpty()) name else "Jssaten")
+                apply()
+            }
+            
             findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
         }
     }

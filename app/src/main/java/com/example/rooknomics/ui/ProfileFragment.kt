@@ -24,6 +24,20 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
+        // Load User Data
+        val sharedPref = requireActivity().getSharedPreferences("USER_SESSION", android.content.Context.MODE_PRIVATE)
+        val email = sharedPref.getString("EMAIL", "24cseaiml055@jssaten.ac.in") ?: "24cseaiml055@jssaten.ac.in"
+        val name = sharedPref.getString("NAME", "Jssaten") ?: "Jssaten"
+        
+        binding.tvProfileName.text = name
+        binding.tvProfileEmail.text = email
+        binding.tvInfoEmail.text = email
+        binding.tvProfileAvatar.text = name.firstOrNull()?.uppercase() ?: "J"
+        
+        binding.btnBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.btnSignOut.setOnClickListener {
             // Usually returns to Login
             try {
