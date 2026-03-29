@@ -673,7 +673,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <TextView android:layout_width="32dp" android:layout_height="32dp" android:text="01" android:textSize="12sp" android:textColor="@color/emerald_brand" android:background="@drawable/bg_input" android:gravity="center" android:textStyle="bold"/>
+                    <TextView android:layout_width="32dp" android:layout_height="32dp" android:text="01" android:textSize="12sp" android:textColor="@color/gold_brand" android:background="@drawable/bg_input" android:gravity="center" android:textStyle="bold"/>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CONFIGURE" android:textColor="@color/text_tertiary" android:textSize="10sp" android:letterSpacing="0.2"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Define Your Rules" android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold" android:layout_marginTop="8dp"/>
@@ -687,7 +687,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <TextView android:layout_width="32dp" android:layout_height="32dp" android:text="02" android:textSize="12sp" android:textColor="@color/emerald_brand" android:background="@drawable/bg_input" android:gravity="center" android:textStyle="bold"/>
+                    <TextView android:layout_width="32dp" android:layout_height="32dp" android:text="02" android:textSize="12sp" android:textColor="@color/gold_brand" android:background="@drawable/bg_input" android:gravity="center" android:textStyle="bold"/>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="EXECUTE" android:textColor="@color/text_tertiary" android:textSize="10sp" android:letterSpacing="0.2"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Run Simulation" android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold" android:layout_marginTop="8dp"/>
@@ -728,7 +728,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Reproduction."
-                android:textColor="@color/emerald_brand"
+                android:textColor="@color/gold_brand"
                 android:textSize="50sp"
                 android:textStyle="bold"
                 android:lineSpacingExtra="-8dp"
@@ -935,7 +935,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="40dp"
                     android:layout_marginHorizontal="32dp"
-                    android:background="@color/emerald_brand"
+                    android:background="@color/gold_brand"
                     android:text="START SIMULATION  →"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -958,7 +958,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ılı  ROOKNOMICS © 2026"
+                    android:text="  ROOKNOMICS © 2026"
                     android:textColor="@color/text_secondary"
                     android:textSize="10sp"
                     android:textStyle="bold"
