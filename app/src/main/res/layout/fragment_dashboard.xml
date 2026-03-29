@@ -4,152 +4,309 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_page">
-    
-    <!-- Hero Section -->
-    <TextView
-        android:id="@+id/tv_system_active"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SYSTEM ACTIVE  •"
-        android:textSize="12sp"
-        android:letterSpacing="0.2"
-        android:textColor="@color/text_secondary"
-        android:layout_marginTop="64dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
-        android:id="@+id/tv_hero_1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="BEAT THE\nINDEX."
-        android:textColor="@color/text_primary"
-        android:textSize="56sp"
-        android:textStyle="bold"
-        android:lineSpacingExtra="-8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_system_active"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_hero_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="OUTPERFORM IF YOU CAN."
-        android:textColor="@color/gold_brand"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_hero_1"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Test your strategy against decades of market data."
-        android:textColor="@color/text_secondary"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="64dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_hero_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Button -->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_to_builder"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginStart="24dp"
-        android:background="@color/gold_brand"
-        android:paddingHorizontal="32dp"
-        android:text="RUN SIMULATION  →"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_subtitle" />
-        
-    <!-- Footer / Bottom Status -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="32dp"
-        android:paddingHorizontal="24dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
         
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DATA RANGE"
-                android:textColor="@color/text_secondary"
-                android:textSize="10sp"
-                android:letterSpacing="0.1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2000 - 2024"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
+            android:orientation="vertical"
+            android:paddingBottom="64dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Top Header containing Avatar -->
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ENGINE"
-                android:textColor="@color/text_secondary"
-                android:textSize="10sp"
-                android:letterSpacing="0.1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="V3.1"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-        
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LATENCY"
-                android:textColor="@color/text_secondary"
-                android:textSize="10sp"
-                android:letterSpacing="0.1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="&lt;1MS"
-                android:textColor="@color/text_primary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-    </LinearLayout>
+                android:padding="24dp">
+                
+                <TextView
+                    android:id="@+id/tv_system_active"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SYSTEM ACTIVE  •"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.2"
+                    android:textColor="@color/text_secondary"
+                    android:layout_centerVertical="true"/>
 
+                <!-- Profile Avatar -->
+                <TextView
+                    android:id="@+id/btn_profile"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/bg_circle_avatar"
+                    android:text="J"
+                    android:textColor="@color/emerald_text"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BEAT THE\nINDEX."
+                android:textColor="@color/text_primary"
+                android:textSize="56sp"
+                android:textStyle="bold"
+                android:lineSpacingExtra="-8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="24dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OUTPERFORM IF YOU CAN."
+                android:textColor="@color/gold_brand"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="24dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Test your strategy against decades of market data."
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="64dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_to_builder"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="24dp"
+                android:background="@color/gold_brand"
+                android:paddingHorizontal="32dp"
+                android:text="RUN SIMULATION  →"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+                
+            <!-- Top Status Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="32dp"
+                android:paddingHorizontal="24dp">
+                
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DATA RANGE"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2000 - 2024"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ENGINE"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="V3.1"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+                
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LATENCY"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="10sp"
+                        android:letterSpacing="0.1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="&lt;1MS"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/border_color"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="32dp"/>
+
+            <!-- Elite Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                app:cardBackgroundColor="@color/surface_card"
+                app:cardCornerRadius="16dp"
+                app:strokeColor="@color/border_color"
+                app:strokeWidth="1dp">
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+                    
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ROOKNOMICS BLACK · ELITE"
+                        android:textColor="@color/gold_brand"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.1"
+                        android:textStyle="bold"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="24dp">
+                        
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="MEMBERS"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp"
+                                android:letterSpacing="0.1"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ELITE ONLY"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="4dp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="RETURNS"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp"
+                                android:letterSpacing="0.1"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="VERIFIED"
+                                android:textColor="@color/emerald_text"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="4dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Features -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BUILT FOR THOSE WHO OUTPERFORM."
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Institutional-grade execution\n• Risk-adjusted position sizing\n• Zero-latency signal routing"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:lineSpacingExtra="8dp"
+                android:layout_marginHorizontal="24dp"/>
+
+            <!-- Performance Box -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="@color/emerald_brand"
+                app:cardCornerRadius="8dp"
+                app:strokeColor="@color/emerald_text"
+                app:strokeWidth="1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="YOUR STRATEGY VS THE MARKET"
+                        android:textColor="@color/emerald_text"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.1"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+47.2% RETURN"
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

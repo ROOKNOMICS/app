@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_builderFragment"
             app:destination="@id/builderFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
@@ -54,5 +57,11 @@
         android:name="com.example.rooknomics.ui.LearnFragment"
         android:label="Learn"
         tools:layout="@layout/fragment_learn" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.rooknomics.ui.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 
 </navigation>

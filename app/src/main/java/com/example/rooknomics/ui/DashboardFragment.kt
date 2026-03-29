@@ -25,6 +25,10 @@ class DashboardFragment : Fragment() {
         binding.btnToBuilder.setOnClickListener {
             findNavController().navigate(com.example.rooknomics.R.id.action_dashboardFragment_to_builderFragment)
         }
+        
+        binding.btnProfile.setOnClickListener {
+            findNavController().navigate(com.example.rooknomics.R.id.action_dashboardFragment_to_profileFragment)
+        }
     }
 
     override fun onDestroyView() {
