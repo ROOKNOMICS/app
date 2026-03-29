@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    
+    <!-- Primary Green & Gold Accents -->
+    <color name="emerald_brand">#0B2B1B</color> <!-- The dark green button background -->
+    <color name="emerald_text">#4ADE80</color> <!-- The bright green text/icons -->
+    <color name="gold_brand">#F5C542</color> <!-- Highlight color for Hero headers and CTA -->
+    
+    <!-- Backgrounds -->
+    <color name="background_page">#000000</color>
+    <color name="surface_card">#0B0B0B</color> <!-- Slightly lighter for the pop-up card -->
+    <color name="surface_input">#141414</color>
+    <color name="surface_button">#18181B</color>
+    
+    <!-- Strokes & Lines -->
+    <color name="border_color">#27272A</color>
+    
+    <!-- Text -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#71717A</color>
+    <color name="text_tertiary">#52525B</color>
+</resources>

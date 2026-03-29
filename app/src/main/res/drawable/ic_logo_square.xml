@@ -1,0 +1,5 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp" android:height="32dp" android:viewportWidth="32.0" android:viewportHeight="32.0">
+    <path android:fillColor="@color/emerald_brand" android:pathData="M6,2 h20 c2.2,0 4,1.8 4,4 v20 c0,2.2 -1.8,4 -4,4 H6 c-2.2,0 -4,-1.8 -4,-4 V6 c0,-2.2 1.8,-4 4,-4 z"/>
+    <path android:fillColor="@color/emerald_text" android:pathData="M9,22 v-6 h3 v6 z M14.5,22 v-12 h3 v12 z M20,22 v-9 h3 v9 z"/>
+</vector>

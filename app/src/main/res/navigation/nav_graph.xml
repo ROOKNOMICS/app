@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.rooknomics.ui.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.rooknomics.ui.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboardFragment_to_builderFragment"
+            app:destination="@id/builderFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/builderFragment"
+        android:name="com.example.rooknomics.ui.BuilderFragment"
+        android:label="Builder"
+        tools:layout="@layout/fragment_builder">
+        <action
+            android:id="@+id/action_builderFragment_to_resultsFragment"
+            app:destination="@id/resultsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.example.rooknomics.ui.ResultsFragment"
+        android:label="Results"
+        tools:layout="@layout/fragment_results" />
+
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.example.rooknomics.ui.NewsFragment"
+        android:label="News"
+        tools:layout="@layout/fragment_news" />
+
+    <fragment
+        android:id="@+id/learnFragment"
+        android:name="com.example.rooknomics.ui.LearnFragment"
+        android:label="Learn"
+        tools:layout="@layout/fragment_learn" />
+
+</navigation>
