@@ -13,3 +13,24 @@
 .externalNativeBuild
 .cxx
 local.properties
+# Logs & debug files
+*.txt
+*.log
+
+# Build logs (your specific files)
+build_log.txt
+build_utf8.txt
+crash_log.txt
+crash_log_utf8.txt
+output.txt
+output_error.txt
+output_error_utf8.txt
+output_utf8.txt
+
+# Gradle build outputs
+/build/
+/app/build/
+
+# OS files
+
+Thumbs.db
