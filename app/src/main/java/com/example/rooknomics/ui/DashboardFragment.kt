@@ -27,44 +27,51 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // ✅ GET USER NAME (API → SharedPrefs fallback)
+
         val sharedPref = requireActivity()
             .getSharedPreferences("USER_SESSION", Context.MODE_PRIVATE)
 
-        val nameFromStorage = sharedPref.getString("NAME", null)
-
-        // If API already saved name → use it
-        val finalName = nameFromStorage ?: "User"
-
-        // Extract initial
-        val initial = if (finalName.isNotEmpty()) {
-            finalName.trim()[0].uppercaseChar().toString()
+        val name = sharedPref.getString("NAME", "User")
+        val initial = if (!name.isNullOrEmpty()) {
+            name.trim()[0].uppercaseChar().toString()
         } else {
             "U"
         }
-
         binding.btnProfile.text = initial
 
-        // 🎯 Animation
         val floatAnim = android.view.animation.AnimationUtils
             .loadAnimation(requireContext(), R.anim.anim_float)
         binding.ivGoldCoins.startAnimation(floatAnim)
 
-        // 🔁 Navigation
-        binding.btnToBuilder.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboardFragment_to_builderFragment)
-        }
 
-        binding.btnRunSimBottom.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboardFragment_to_builderFragment)
-        }
+        binding.apply {
 
-        binding.btnViewDemo.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboardFragment_to_builderFragment)
-        }
 
-        binding.btnProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_dashboardFragment_to_profileFragment)
+            btnToBuilder.setOnClickListener {
+                findNavController().navigate(R.id.action_dashboardFragment_to_builderFragment)
+            }
+
+
+            btnRunSimBottom.setOnClickListener {
+                findNavController().navigate(R.id.action_dashboardFragment_to_builderFragment)
+            }
+
+            btnViewDemo.setOnClickListener {
+                findNavController().navigate(R.id.action_dashboardFragment_to_builderFragment)
+            }
+
+            btnProfile.setOnClickListener {
+                findNavController().navigate(R.id.action_dashboardFragment_to_profileFragment)
+            }
+
+
+            try {
+                btnSimulateReturns.setOnClickListener {
+                    findNavController().navigate(R.id.action_dashboardFragment_to_builderFragment)
+                }
+            } catch (e: Exception) {
+
+            }
         }
     }
 
