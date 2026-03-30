@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-    private const val BASE_URL = "https://rooknomics-server.onrender.com"
+    private const val BASE_URL = "https://rooknomics-server.onrender.com/"
     private var retrofit: Retrofit? = null
 
     fun getClient(context: Context): Retrofit {

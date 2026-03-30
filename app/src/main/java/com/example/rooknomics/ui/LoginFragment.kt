@@ -2,6 +2,7 @@ package com.example.rooknomics.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,26 +28,55 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
     private var isLoginMode = true
 
-    // Dynamic Retrofit ViewModel injection
     private val authViewModel: AuthViewModel by viewModels {
-        AuthViewModelFactory(AuthRepository(ApiClient.getClient(requireContext()).create(AuthApi::class.java)))
+        AuthViewModelFactory(
+            AuthRepository(
+                ApiClient.getClient(requireContext()).create(AuthApi::class.java)
+            )
+        )
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         updateUI()
 
+        // 🔁 Switch Login/Signup
         binding.llFooter.setOnClickListener {
             isLoginMode = !isLoginMode
             updateUI()
         }
 
+        // 🔐 PASSWORD TOGGLE FIX (MAIN THING)
+        var isPasswordVisible = false
+
+        binding.ivTogglePassword.setOnClickListener {
+            if (isPasswordVisible) {
+                binding.etPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.ivTogglePassword.setImageResource(R.drawable.ic_eye_line)
+            } else {
+                binding.etPassword.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                binding.ivTogglePassword.setImageResource(R.drawable.ic_eye_off_line)
+            }
+
+            isPasswordVisible = !isPasswordVisible
+
+            // cursor end pe rakho
+            binding.etPassword.setSelection(binding.etPassword.text.length)
+        }
+
+        // 🔑 LOGIN / SIGNUP
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
@@ -61,51 +91,58 @@ class LoginFragment : Fragment() {
                 authViewModel.login(LoginRequest(email, password))
             } else {
                 if (name.isEmpty()) {
-                    Toast.makeText(context, "Name is required for registration", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Name is required", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 authViewModel.register(RegisterRequest(name, email, password))
             }
         }
 
+        // 📡 OBSERVER
         authViewModel.authState.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 is AuthState.Loading -> {
                     binding.btnLogin.isEnabled = false
                     binding.btnLogin.text = "Authenticating..."
                 }
+
                 is AuthState.Success -> {
                     binding.btnLogin.isEnabled = true
-                    
+
                     if (isLoginMode) {
-                        val sharedPref = requireActivity().getSharedPreferences("USER_SESSION", Context.MODE_PRIVATE)
-                        with (sharedPref.edit()) {
+                        val sharedPref = requireActivity()
+                            .getSharedPreferences("USER_SESSION", Context.MODE_PRIVATE)
+
+                        with(sharedPref.edit()) {
                             putString("EMAIL", state.response.user?.email ?: binding.etEmail.text.toString())
                             putString("NAME", state.response.user?.name ?: "RookUser")
                             apply()
                         }
-                        
+
                         try {
                             findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
-                        } catch (e: Exception) {}
+                        } catch (_: Exception) {}
                     } else {
-                        // Registration success. Must transition to Verify OTP.
-                        // Pass the pending email via SharedPreferences so OTP screen knows where to look.
-                        val sharedPref = requireActivity().getSharedPreferences("USER_SESSION", Context.MODE_PRIVATE)
-                        with (sharedPref.edit()) {
-                            putString("PENDING_EMAIL", binding.etEmail.text.toString().trim())
+                        val sharedPref = requireActivity()
+                            .getSharedPreferences("USER_SESSION", Context.MODE_PRIVATE)
+
+                        with(sharedPref.edit()) {
+                            putString("PENDING_EMAIL", binding.etEmail.text.toString())
                             apply()
                         }
+
                         try {
                             findNavController().navigate(R.id.action_loginFragment_to_verifyOtpFragment)
-                        } catch (e: Exception) {}
+                        } catch (_: Exception) {}
                     }
                 }
+
                 is AuthState.Error -> {
                     binding.btnLogin.isEnabled = true
-                    updateUI() // reset button text safely
-                    Toast.makeText(context, "Error: ${state.message}", Toast.LENGTH_SHORT).show()
+                    updateUI()
+                    Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
                 }
+
                 else -> {
                     binding.btnLogin.isEnabled = true
                 }
