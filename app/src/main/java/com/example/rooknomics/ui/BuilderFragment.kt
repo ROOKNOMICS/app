@@ -88,6 +88,7 @@ class BuilderFragment : Fragment() {
                 rulesConfig = RulesConfig(rsi = rsiConfig, maCross = maConfig)
             )
 
+            simulationViewModel.reset() //for every new runBacktest() call puts Vm back to Idle state
             simulationViewModel.runBacktest(request)
 
             try {

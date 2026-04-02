@@ -22,8 +22,11 @@ class SimulationViewModel(private val repository: BacktestRepository) : ViewMode
     val simState: LiveData<SimState> = _simState
 
     fun runBacktest(request: BacktestRequest) {
+
+        _simState.value = SimState.Loading
+
         viewModelScope.launch {
-            _simState.postValue(SimState.Loading)
+//            _simState.postValue(SimState.Loading)
             try {
                 val result = repository.runBacktest(request)
                 if (result.isSuccessful && result.body() != null) {

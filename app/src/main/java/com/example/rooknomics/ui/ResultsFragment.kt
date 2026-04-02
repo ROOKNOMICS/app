@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -23,6 +24,10 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.RadarData
+import com.github.mikephil.charting.data.RadarDataSet
+import com.github.mikephil.charting.data.RadarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.text.DecimalFormat
 
 class ResultsFragment : Fragment() {
@@ -54,10 +59,23 @@ class ResultsFragment : Fragment() {
                 is SimState.Idle -> {
                     binding.llChartPlaceholder.visibility = View.VISIBLE
                     binding.lineChart.visibility = View.GONE
+                    binding.llTradeLogsContainer.removeAllViews()
                 }
                 is SimState.Loading -> {
                     binding.llChartPlaceholder.visibility = View.VISIBLE
                     binding.lineChart.visibility = View.GONE
+                    binding.llTradeLogsContainer.removeAllViews()
+                    // Add a "loading" label inside the placeholder
+                    val tv = binding.llChartPlaceholder.findViewWithTag<TextView>("loading_tv")
+                    if (tv == null) {
+                        val label = TextView(requireContext()).apply {
+                            tag = "loading_tv"
+                            text = "Running simulation..."
+                            textSize = 12f
+                            setTextColor(Color.parseColor("#9CA3AF"))
+                        }
+                        binding.llChartPlaceholder.addView(label)
+                    }
                 }
                 is SimState.Success -> {
                     binding.llChartPlaceholder.visibility = View.GONE
@@ -68,8 +86,8 @@ class ResultsFragment : Fragment() {
 
                     binding.tvMetricTotalReturn.text = percentFormat.format(perf.totalReturn)
                     binding.tvMetricAnnualized.text = percentFormat.format(perf.benchmarkReturn)
-                    binding.tvMetricMaxDrawdown.text = perf.maxDrawdown?.let{percentFormat.format(it)}?:"-"
-                    binding.tvMetricWinRate.text = perf.winRate?.let{percentFormat.format(it)}?:"-"
+                    binding.tvMetricMaxDrawdown.text = perf.maxDrawdown?.let { percentFormat.format(it) } ?: "—"
+                    binding.tvMetricWinRate.text = perf.winRate?.let { percentFormat.format(it) } ?: "—"
 
                     binding.tvVerdictStatus.text = results.verdict.status.uppercase()
                     binding.tvVerdictSummary.text = results.verdict.summary
@@ -87,7 +105,8 @@ class ResultsFragment : Fragment() {
                     binding.tvTradeCount.text = "${perf.numberOfTrades} TRADES"
 
                     populateTradesList(results.trades)
-                    updateChart(results.trades,perf)
+                    updateChart(results.trades, perf)
+                    updateRadarChart(perf)
                 }
                 is SimState.Error -> {
                     Toast.makeText(context, "Error: ${state.message}", Toast.LENGTH_LONG).show()
@@ -113,22 +132,21 @@ class ResultsFragment : Fragment() {
         chart.axisRight.isEnabled = false
     }
 
-//    private fun updateChart(trades: List<TradeLog>) {
-//        if (trades.isEmpty()) return
-
-    private fun updateChart(trades: List<TradeLog>,perf:com.example.rooknomics.data.models.PerformanceMetrics){
-
-
+    private fun updateChart(trades: List<TradeLog>, perf: com.example.rooknomics.data.models.PerformanceMetrics) {
         val entries = ArrayList<Entry>()
 
-        entries.add(Entry(0f,10000f))
+        // Add Initial Capital Anchor
+        entries.add(Entry(0f, 10000f))
 
+        // Map individual trades progression
         for (i in trades.indices) {
             val t = trades[i]
-            entries.add(Entry((i+1).toFloat(), t.totalValue.toFloat()))
+            entries.add(Entry((i + 1).toFloat(), t.totalValue.toFloat()))
         }
 
-        entries.add(Entry((trades.size+1).toFloat(),perf.finalValue.toFloat()))
+        // Add Final Equity Anchor
+        entries.add(Entry((trades.size + 1).toFloat(), perf.finalValue.toFloat()))
+
         val dataSet = LineDataSet(entries, "Equity Curve")
         dataSet.color = Color.parseColor("#00FF85") // emerald
         dataSet.valueTextColor = Color.WHITE
@@ -139,6 +157,58 @@ class ResultsFragment : Fragment() {
         val lineData = LineData(dataSet)
         binding.lineChart.data = lineData
         binding.lineChart.invalidate()
+    }
+
+    private fun updateRadarChart(perf: com.example.rooknomics.data.models.PerformanceMetrics) {
+        val radarChart = binding.radarChart
+
+        // Normalize values to 0–100 scale for radar axes
+        val returnsScore = (perf.totalReturn.coerceIn(-100.0, 200.0) + 100) / 3.0
+        val stabilityScore = 100.0 - (perf.dailyVolatility?.coerceIn(0.0, 5.0)?.times(20) ?: 50.0)
+        val drawdownScore = 100.0 - (perf.maxDrawdown?.coerceIn(0.0, 100.0) ?: 50.0)
+        val costsScore = 80.0 // fixed fee structure = 0
+        val liquidityScore = (perf.numberOfTrades.coerceIn(0, 100).toDouble() / 100.0) * 100.0
+
+        val entries = listOf(
+            RadarEntry(returnsScore.toFloat()),
+            RadarEntry(stabilityScore.toFloat()),
+            RadarEntry(drawdownScore.toFloat()),
+            RadarEntry(costsScore.toFloat()),
+            RadarEntry(liquidityScore.toFloat())
+        )
+
+        val dataSet = RadarDataSet(entries, "Risk Profile")
+        dataSet.color = Color.parseColor("#00FF85")
+        dataSet.fillColor = Color.parseColor("#00FF85")
+        dataSet.setDrawFilled(true)
+        dataSet.fillAlpha = 60
+        dataSet.lineWidth = 2f
+        dataSet.setDrawHighlightCircleEnabled(true)
+        dataSet.setDrawHighlightIndicators(false)
+
+        val data = RadarData(dataSet)
+        data.setValueTextSize(8f)
+        data.setDrawValues(false)
+
+        radarChart.data = data
+
+        val labels = arrayOf("Returns", "Stab", "Drawdown", "Costs", "city")
+        radarChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        radarChart.xAxis.textColor = Color.parseColor("#9CA3AF")
+        radarChart.xAxis.textSize = 10f
+
+        radarChart.yAxis.setDrawLabels(false)
+        radarChart.yAxis.axisMinimum = 0f
+        radarChart.yAxis.axisMaximum = 100f
+
+        radarChart.webColor = Color.parseColor("#374151")
+        radarChart.webColorInner = Color.parseColor("#374151")
+        radarChart.webAlpha = 100
+
+        radarChart.description.isEnabled = false
+        radarChart.legend.isEnabled = false
+
+        radarChart.invalidate()
     }
 
     private fun populateTradesList(trades: List<TradeLog>) {
