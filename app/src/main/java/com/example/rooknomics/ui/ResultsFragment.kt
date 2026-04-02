@@ -178,31 +178,33 @@ class ResultsFragment : Fragment() {
         val radarChart = binding.radarChart
 
         // Normalize values to 0–100 scale for radar axes
-        val returnsScore = (perf.totalReturn.coerceIn(-100.0, 200.0) + 100) / 3.0
-        val stabilityScore = 100.0 - (perf.dailyVolatility?.coerceIn(0.0, 5.0)?.times(20) ?: 50.0)
-        val drawdownScore = 100.0 - (perf.maxDrawdown?.coerceIn(0.0, 100.0) ?: 50.0)
-        val costsScore = 80.0 // fixed fee structure = 0
-        val liquidityScore = (perf.numberOfTrades.coerceIn(0, 100).toDouble() / 100.0) * 100.0
+        val returnsScore = ((perf.totalReturn.coerceIn(-50.0, 150.0) + 50) / 2.0).toFloat()
+        val volatility = perf.dailyVolatility ?: 1.5
+        val stabilityScore = (100.0 - (volatility.coerceIn(0.0, 5.0) * 20)).toFloat()
+        val drawdown = perf.maxDrawdown ?: 30.0
+        val drawdownScore = (100.0 - drawdown.coerceIn(0.0, 100.0)).toFloat()
+        val costsScore = 80f // Fixed fee structure
+        val tradesScore = (perf.numberOfTrades.coerceIn(0, 200).toDouble() / 2.0).toFloat()
 
         val entries = listOf(
-            RadarEntry(returnsScore.toFloat()),
-            RadarEntry(stabilityScore.toFloat()),
-            RadarEntry(drawdownScore.toFloat()),
-            RadarEntry(costsScore.toFloat()),
-            RadarEntry(liquidityScore.toFloat())
+            RadarEntry(returnsScore),
+            RadarEntry(stabilityScore),
+            RadarEntry(drawdownScore),
+            RadarEntry(costsScore),
+            RadarEntry(tradesScore)
         )
 
         val dataSet = RadarDataSet(entries, "Risk Profile")
         dataSet.color = Color.parseColor("#00FF85")
         dataSet.fillColor = Color.parseColor("#00FF85")
         dataSet.setDrawFilled(true)
-        dataSet.fillAlpha = 60
+        dataSet.fillAlpha = 80
         dataSet.lineWidth = 2f
-        dataSet.setDrawHighlightCircleEnabled(true)
+        dataSet.setDrawHighlightCircleEnabled(false)
         dataSet.setDrawHighlightIndicators(false)
+        dataSet.valueTextColor = Color.TRANSPARENT
 
         val data = RadarData(dataSet)
-        data.setValueTextSize(8f)
         data.setDrawValues(false)
 
         radarChart.data = data
@@ -215,16 +217,37 @@ class ResultsFragment : Fragment() {
         radarChart.yAxis.setDrawLabels(false)
         radarChart.yAxis.axisMinimum = 0f
         radarChart.yAxis.axisMaximum = 100f
+        radarChart.yAxis.setLabelCount(5, true)
 
         radarChart.webColor = Color.parseColor("#374151")
         radarChart.webColorInner = Color.parseColor("#374151")
-        radarChart.webAlpha = 100
+        radarChart.webAlpha = 120
+        radarChart.webLineWidth = 1f
+        radarChart.webLineWidthInner = 0.75f
 
         radarChart.description.isEnabled = false
         radarChart.legend.isEnabled = false
-
+        radarChart.setBackgroundColor(Color.TRANSPARENT)
         radarChart.invalidate()
+
+        // — Calculate & display BETA, ALPHA, VAR(5%) —
+        // Beta: strategy vol / benchmark assumed vol (1% daily benchmark)
+        val benchmarkDailyVol = 1.0
+        val beta = volatility / benchmarkDailyVol
+
+        // Alpha (Jensen's): strategy return - beta * benchmark return
+        val alpha = perf.totalReturn - (beta * perf.benchmarkReturn)
+
+        // VAR at 5%: using normal approximation: -1.645 * dailyVol
+        val varAt5 = -1.645 * volatility
+
+        val df2 = DecimalFormat("0.00")
+        val dfPct = DecimalFormat("0.0'%'")
+        binding.tvRiskBeta.text = df2.format(beta)
+        binding.tvRiskAlpha.text = dfPct.format(alpha)
+        binding.tvRiskVar.text = dfPct.format(varAt5)
     }
+
 
     private fun populateTradesList(trades: List<TradeLog>) {
         binding.llTradeLogsContainer.removeAllViews()
