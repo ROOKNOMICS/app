@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
-                        
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -76,13 +76,28 @@
                         android:background="@color/border_color"/>
 
                     <!-- Sliders -->
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="RSI Period days"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="12sp"/>
-                        
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RSI Period days"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp"/>
+                        <TextView
+                            android:id="@+id/tv_rsi_period_val"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="14"
+                            android:textColor="@color/emerald_brand"
+                            android:textSize="14sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+
                     <com.google.android.material.slider.Slider
                         android:id="@+id/slider_rsi_period"
                         android:layout_width="match_parent"
@@ -100,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="8dp">
-                        
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -108,13 +123,28 @@
                             android:orientation="vertical"
                             android:layout_marginEnd="8dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Buy Below (Oversold)"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp"/>
-                                
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Buy Below (Oversold)"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp"/>
+                                <TextView
+                                    android:id="@+id/tv_rsi_buy_val"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="30"
+                                    android:textColor="@color/emerald_brand"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
                             <com.google.android.material.slider.Slider
                                 android:id="@+id/slider_rsi_buy"
                                 android:layout_width="match_parent"
@@ -135,13 +165,28 @@
                             android:orientation="vertical"
                             android:layout_marginStart="8dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Sell Above (Overbought)"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp"/>
-                                
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Sell Above (Overbought)"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp"/>
+                                <TextView
+                                    android:id="@+id/tv_rsi_sell_val"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="70"
+                                    android:textColor="#EF4444"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
                             <com.google.android.material.slider.Slider
                                 android:id="@+id/slider_rsi_sell"
                                 android:layout_width="match_parent"
@@ -188,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
-                        
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -234,7 +279,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        
+
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -242,13 +287,28 @@
                             android:orientation="vertical"
                             android:layout_marginEnd="8dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Short Period"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp"/>
-                                
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Short Period days"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp"/>
+                                <TextView
+                                    android:id="@+id/tv_ma_short_val"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="50"
+                                    android:textColor="@color/emerald_brand"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
                             <com.google.android.material.slider.Slider
                                 android:id="@+id/slider_ma_short"
                                 android:layout_width="match_parent"
@@ -269,13 +329,28 @@
                             android:orientation="vertical"
                             android:layout_marginStart="8dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Long Period"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp"/>
-                                
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Long Period days"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp"/>
+                                <TextView
+                                    android:id="@+id/tv_ma_long_val"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="200"
+                                    android:textColor="@color/emerald_brand"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
                             <com.google.android.material.slider.Slider
                                 android:id="@+id/slider_ma_long"
                                 android:layout_width="match_parent"
@@ -348,7 +423,7 @@
                 android:padding="16dp"
                 android:background="@drawable/bg_input"
                 android:layout_marginBottom="24dp">
-                
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

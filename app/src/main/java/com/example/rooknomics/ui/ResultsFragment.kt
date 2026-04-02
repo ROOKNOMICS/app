@@ -133,29 +133,44 @@ class ResultsFragment : Fragment() {
     }
 
     private fun updateChart(trades: List<TradeLog>, perf: com.example.rooknomics.data.models.PerformanceMetrics) {
-        val entries = ArrayList<Entry>()
+        val strategyEntries = ArrayList<Entry>()
 
-        // Add Initial Capital Anchor
-        entries.add(Entry(0f, 10000f))
-
-        // Map individual trades progression
+        // Anchor at initial capital
+        strategyEntries.add(Entry(0f, 10000f))
         for (i in trades.indices) {
-            val t = trades[i]
-            entries.add(Entry((i + 1).toFloat(), t.totalValue.toFloat()))
+            strategyEntries.add(Entry((i + 1).toFloat(), trades[i].totalValue.toFloat()))
         }
+        strategyEntries.add(Entry((trades.size + 1).toFloat(), perf.finalValue.toFloat()))
 
-        // Add Final Equity Anchor
-        entries.add(Entry((trades.size + 1).toFloat(), perf.finalValue.toFloat()))
+        val strategyDataSet = LineDataSet(strategyEntries, "Strategy")
+        strategyDataSet.color = Color.parseColor("#9CA3AF") // grey like the website
+        strategyDataSet.valueTextColor = Color.TRANSPARENT
+        strategyDataSet.lineWidth = 2f
+        strategyDataSet.setDrawCircles(false)
+        strategyDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        strategyDataSet.setDrawFilled(true)
+        strategyDataSet.fillColor = Color.parseColor("#374151")
+        strategyDataSet.fillAlpha = 60
 
-        val dataSet = LineDataSet(entries, "Equity Curve")
-        dataSet.color = Color.parseColor("#00FF85") // emerald
-        dataSet.valueTextColor = Color.WHITE
-        dataSet.lineWidth = 2f
-        dataSet.setDrawCircles(false)
-        dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        // S&P 500 benchmark — draw as a straight line from 10000 to benchmarkFinalValue
+        val benchmarkEnd = perf.benchmarkFinalValue ?: (10000 * (1 + perf.benchmarkReturn / 100)).toFloat()
+        val benchmarkEntries = ArrayList<Entry>()
+        benchmarkEntries.add(Entry(0f, 10000f))
+        benchmarkEntries.add(Entry((trades.size + 1).toFloat(), benchmarkEnd.toFloat()))
 
-        val lineData = LineData(dataSet)
+        val benchmarkDataSet = LineDataSet(benchmarkEntries, "S&P 500")
+        benchmarkDataSet.color = Color.parseColor("#00FF85") // emerald like the website
+        benchmarkDataSet.valueTextColor = Color.TRANSPARENT
+        benchmarkDataSet.lineWidth = 2f
+        benchmarkDataSet.setDrawCircles(false)
+        benchmarkDataSet.mode = LineDataSet.Mode.LINEAR
+        benchmarkDataSet.setDrawFilled(true)
+        benchmarkDataSet.fillColor = Color.parseColor("#00FF85")
+        benchmarkDataSet.fillAlpha = 20
+
+        val lineData = LineData(strategyDataSet, benchmarkDataSet)
         binding.lineChart.data = lineData
+        binding.lineChart.legend.textColor = Color.WHITE
         binding.lineChart.invalidate()
     }
 

@@ -45,6 +45,23 @@ class BuilderFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, maTypes)
         binding.spinnerMaType.adapter = adapter
 
+        // Live slider value display
+        binding.sliderRsiPeriod.addOnChangeListener { _, value, _ ->
+            binding.tvRsiPeriodVal.text = value.toInt().toString()
+        }
+        binding.sliderRsiBuy.addOnChangeListener { _, value, _ ->
+            binding.tvRsiBuyVal.text = value.toInt().toString()
+        }
+        binding.sliderRsiSell.addOnChangeListener { _, value, _ ->
+            binding.tvRsiSellVal.text = value.toInt().toString()
+        }
+        binding.sliderMaShort.addOnChangeListener { _, value, _ ->
+            binding.tvMaShortVal.text = value.toInt().toString()
+        }
+        binding.sliderMaLong.addOnChangeListener { _, value, _ ->
+            binding.tvMaLongVal.text = value.toInt().toString()
+        }
+
         binding.btnRunSimulationBuilder.setOnClickListener {
             val isRsiEnabled = binding.switchMomentum.isChecked
             val isMaEnabled = binding.switchTrend.isChecked
@@ -81,14 +98,13 @@ class BuilderFragment : Fragment() {
             val request = BacktestRequest(
                 name = "Builder Strategy (AAPL)",
                 symbol = "AAPL",
-                startDate = "2024-01-01",
-                endDate = "2024-12-31",
+                startDate = "2015-01-01",
+                endDate = "2023-12-31",
                 capital = 10000,
                 activeRules = activeRules,
                 rulesConfig = RulesConfig(rsi = rsiConfig, maCross = maConfig)
             )
 
-            simulationViewModel.reset() //for every new runBacktest() call puts Vm back to Idle state
             simulationViewModel.runBacktest(request)
 
             try {
