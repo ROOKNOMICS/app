@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.rooknomics.data.models.BacktestApiResponse
+import com.example.rooknomics.data.models.BacktestResults
 import com.example.rooknomics.data.models.BacktestRequest
 import com.example.rooknomics.data.repository.BacktestRepository
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 sealed class SimState {
     object Idle : SimState()
     object Loading : SimState()
-    data class Success(val response: BacktestApiResponse) : SimState()
+    data class Success(val response: BacktestResults) : SimState()
     data class Error(val message: String) : SimState()
 }
 
@@ -23,16 +23,18 @@ class SimulationViewModel(private val repository: BacktestRepository) : ViewMode
 
     fun runBacktest(request: BacktestRequest) {
         viewModelScope.launch {
-            _simState.value = SimState.Loading
+            _simState.postValue(SimState.Loading)
             try {
                 val result = repository.runBacktest(request)
                 if (result.isSuccessful && result.body() != null) {
-                    _simState.value = SimState.Success(result.body()!!)
+                    _simState.postValue(SimState.Success(result.body()!!))
                 } else {
-                    _simState.value = SimState.Error(result.message() ?: "Execution failed")
+//                    _simState.value = SimState.Error(result.message() ?: "Execution failed")
+                    val errorBody = result.errorBody()?.string() ?: "Unknown Error"
+                    _simState.postValue(SimState.Error("HTTP ${result.code()}: $errorBody"))
                 }
             } catch (e: Exception) {
-                _simState.value = SimState.Error(e.message ?: "Network error")
+                _simState.postValue( SimState.Error(e.message ?: "Network error"))
             }
         }
     }

@@ -5,7 +5,7 @@ data class BacktestRequest(
     val symbol: String,
     val startDate: String,
     val endDate: String,
-    val capital: Double,
+    val capital: Int,
     val activeRules: List<String>,
     val rulesConfig: RulesConfig
 )
@@ -34,13 +34,13 @@ data class PerformanceMetrics(
     val totalReturn: Double,
     val benchmarkReturn: Double,
     val finalValue: Double,
-    val benchmarkFinalValue: Double,
-    val maxDrawdown: Double,
-    val sharpeRatio: Double,
-    val dailyVolatility: Double,
+    val benchmarkFinalValue: Double?,
+    val maxDrawdown: Double?,
+    val sharpeRatio: Double?,
+    val dailyVolatility: Double?,
     val numberOfTrades: Int,
-    val winRate: Double,
-    val profitFactor: Double,
+    val winRate: Double?,
+    val profitFactor: Double?,
     val avgHoldingDays: Double?
 )
 
